@@ -8,12 +8,16 @@ namespace Saving_The_Stars
 {
     public class Star
     {
-        public Image ImageStar;
+        public PictureBox Picture;
         public Point Location;
 
-        public Star(Point location, Image image) 
+        public Star(Image picture, Point location) 
         {
-            ImageStar = image;
+            Picture = new PictureBox()
+            {
+                Image = picture,
+                BackColor = Color.Transparent,
+            };
             Location = location;
         }
     }
