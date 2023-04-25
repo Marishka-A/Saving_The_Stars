@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Saving_The_Stars
 {
     public class Player
     {
-        public static Keys KeyPressed;
         public int Health;
         public Fight Damage;
-        public int Mana;
-        public int manaForQ;
+        //public int Mana;
+        //public int manaForQ;
         public PictureBox? Picture;
         public Point Position;
-        public Player(int health, int damage, int mana, int manaForQ, Point position, Image image)
+        public Player(int health, int damage, Point position, Image image)
         {
             Health = health;
-            Damage = DamageOfPlayer(mana, manaForQ);
-            Mana = mana;
+            Damage = new Fight { Power = 15, ManaForQ = 0};
+            //Mana = mana;
             Picture = new PictureBox()
             {
                 Left = position.X,
@@ -31,13 +31,19 @@ namespace Saving_The_Stars
             };
             Position = position;
         }
-        public Fight DamageOfPlayer(int mana, int manaForQ)
+
+        public void CollectStar(Star star)
         {
-            if (KeyPressed == Keys.R) return new Fight { Power = 10 };
-            if (KeyPressed == Keys.E && mana >= 15) return new Fight { Power = 25, ManaForQ = manaForQ + 25 };
-            if (KeyPressed == Keys.Q && manaForQ >= 100) return new Fight { Power = 100 };
-            return new Fight { Power = 0, ManaForQ = 0 };
+            Damage.ManaForQ += star.Value;
+            //star.Dispose();
         }
+        //public Fight DamageOfPlayer(int mana, int manaForQ)
+        //{
+        //    if (KeyPressed == Keys.R) return new Fight { Power = 10 };
+        //    if (KeyPressed == Keys.E && mana >= 15) return new Fight { Power = 25, ManaForQ = manaForQ + 25 };
+        //    if (KeyPressed == Keys.Q && manaForQ >= 100) return new Fight { Power = 100 };
+        //    return new Fight { Power = 0, ManaForQ = 0 };
+        //}
 
         public void MoveTo(Player player, int dx, int dy)
         {
